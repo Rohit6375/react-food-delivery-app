@@ -1,8 +1,9 @@
-import RestaurantCard from "./RestaurantCard";
+import RestaurantCard, {WithPromotedLabel} from "./RestaurantCard";
 import { useState, useEffect } from "react";
 import resList from "../utils/mockData";
 import Shimmer from "./Shimmer";
 import {Link} from "react-router-dom";
+import useOnlineStatus from "../utils/useOnlineStatus";
 
 const Body = () => {
   // state variable super powreful variable
@@ -10,6 +11,7 @@ const Body = () => {
   const [filteredRestaurant,setFilteredRestaurant]=useState([]);
 
   const [searchText, setsearchText] = useState("");
+  const RestaurantCardPromoted=WithPromotedLabel(RestaurantCard);
 
   // // Normal js variable
   // let listofRestaurantsJS = [
@@ -54,7 +56,7 @@ const Body = () => {
   //   },
   // ];
   // whenever state variable update, react triggers a reconciliation cycle(re-renders the component)
- console.log("body rendered");
+ console.log("body rendered",listofRestaurants);
 
   useEffect(() => {
     // console.log("useEffect called");
@@ -85,6 +87,9 @@ const Body = () => {
     console.error("Error fetching data:", error);
   }
   };
+
+  const onlineStatus=useOnlineStatus();
+  if(onlineStatus===false) return <h1>Looks like you are offline! please check your internet connection</h1>;
   // conditional rendering
   // if(listofRestaurants.length===0){
   //   return <Shimmer/>;
@@ -93,11 +98,11 @@ const Body = () => {
     <Shimmer />
   ) : (
     <div className="body">
-      <div className="filter">
-        <div className="search">
+      <div className="filter flex">
+        <div className="search m-4 p-4">
           <input
             type="text"
-            className="search-box"
+            className=" border border-solid border-black"
             value={searchText}
             onChange={(e) => {
               setsearchText(e.target.value);
@@ -116,7 +121,7 @@ const Body = () => {
     }}
 
           ></input>
-          <button
+          <button className="px-4 py-2 bg-green-100 hover:bg-green-200 m-4 rounded-xl"
           
             onClick={() => {
               //Filter the restaurent Cards and Update the UI
@@ -134,8 +139,9 @@ const Body = () => {
             Search
           </button>
         </div>
-        <button
-  className="filter-btn"
+        <div className="search m-4 p-4 flex items-center"> 
+          <button
+  className="px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-xl"
           onClick={() => {
             //filter logic here
             const filterdList = listofRestaurants.filter(
@@ -147,10 +153,18 @@ const Body = () => {
         >
           Top Rated Restaurant
         </button>
+        </div>
+       
       </div>
-      <div className="res-container">
+      <div className="flex flex-wrap">
         {filteredRestaurant.map((restaurant) => (
-        <Link key={restaurant.info.id} to={"/restaurants/"+restaurant.info.id}>  <RestaurantCard  resData={restaurant} /> </Link>
+        <Link key={restaurant.info.id} to={"/restaurants/"+restaurant.info.id}>
+           {restaurant.info.promoted ? (
+            <RestaurantCardPromoted resData={restaurant}/>
+           ): (<RestaurantCard resData={restaurant}/>)
+            
+        }
+          </Link>
         ))}
       </div>
     </div>

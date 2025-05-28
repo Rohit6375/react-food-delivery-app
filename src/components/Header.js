@@ -1,10 +1,13 @@
 import { LOGO_URL } from "../utils/constants";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import {Link} from "react-router-dom"
+import useOnlineStatus from "../utils/useOnlineStatus";
+import UserContext from "../utils/UserContext";
 const Header = () => {
   //   let btnName = "Login";// can't update ui with normal js variable that's why we use state variables
   const [btnNameReact, setbtnNameReact] = useState("Login");
   console.log("header render");
+  const data=useContext(UserContext);
   // if no dependency array use effect called on every render
   //  useEffect(()=>{
   //   console.log("useeffect called");
@@ -15,31 +18,49 @@ const Header = () => {
  useEffect(()=>{
     console.log("useeffect called");
   },[btnNameReact]);
+  const onlineStatus=useOnlineStatus();
+  
+  console.log(data.loggedInUser);
   return (
-    <div className="header">
-      <div className="logo-container">
-        <img className="logo" src={LOGO_URL} />
-      </div>
-      <div className="nav-items">
-        <ul>
-          <li><Link to="/">Home</Link></li>
-          <li><Link to="/about">About Us</Link></li>
-          <li><Link to="/contact">Contact Us</Link></li>
-          <li>Cart</li>
-          <button
-            className="login"
-            onClick={() => {
-              if (btnNameReact === "Login") {
-                setbtnNameReact("Logout");
-              }
-              else  setbtnNameReact("Login");
-            }}
-          >
-            {btnNameReact}
-          </button>
-        </ul>
-      </div>
-    </div>
+   <div className="flex justify-between bg-pink-100 shadow-lg sm:bg-yellow-50 lg:bg-green-50">
+  <div className="logo-container">
+    <img className="w-56" src={LOGO_URL} />
+  </div>
+  <div className="flex items-center">
+    <ul className="flex p-4 m-4 items-center">
+      <li className="px-4">Online Status: {onlineStatus ? "✅" : "🔴"}</li>
+      <li className="px-4 m-2 border border-solid border-black rounded-lg hover:bg-green-200">
+        <Link to="/">Home</Link>
+      </li>
+      <li className="px-4 m-2 border border-solid border-black rounded-lg hover:bg-green-200">
+        <Link to="/about">About Us</Link>
+      </li>
+      <li className="px-4 m-2 border border-solid border-black rounded-lg hover:bg-green-200">
+        <Link to="/contact">Contact Us</Link>
+      </li>
+      <li className="px-4 m-2 border border-solid border-black rounded-lg hover:bg-green-200">
+        <Link to="/grocery">Grocery</Link>
+      </li>
+      <li className="px-4 m-2 border border-solid border-black rounded-lg hover:bg-green-200">Cart</li>
+      
+      {/* Wrap the login button in <li> */}
+      <li className=" m-1">
+        <button
+          className="px-4  border border-black rounded-lg hover:bg-green-200"
+          onClick={() => {
+            setbtnNameReact(btnNameReact === "Login" ? "Logout" : "Login");
+          }}
+        >
+          {btnNameReact}
+        </button>
+      </li>
+
+      {/* Wrap loggedInUser in <li> */}
+      <li className="px-4 font-bold">{data.loggedInUser}</li>
+    </ul>
+  </div>
+</div>
+
   );
 };
 
