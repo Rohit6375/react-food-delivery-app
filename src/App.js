@@ -28,9 +28,9 @@ const AppLayout = () => {
          <Provider store={appStore}>
         <UserContext.Provider value={{loggedInUser : userInfo,setUserInfo}}>
         <div className="app">
-             <UserContext.Provider value={{loggedInUser : "Get a Job"}}>
+             {/* <UserContext.Provider value={{loggedInUser : "Get a Job"}}> */}
             <Header/>
-            </UserContext.Provider>
+            {/* </UserContext.Provider> */}
             <Outlet/>
         </div>
         </UserContext.Provider>

@@ -58,7 +58,7 @@ const Body = () => {
   //   },
   // ];
   // whenever state variable update, react triggers a reconciliation cycle(re-renders the component)
- console.log("body rendered",listofRestaurants);
+//  console.log("body rendered",listofRestaurants);
 
   useEffect(() => {
     // console.log("useEffect called");
@@ -72,9 +72,7 @@ const Body = () => {
       const data = await fetch(
         "https://www.swiggy.com/dapi/restaurants/list/v5?lat=26.91360&lng=75.78580&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING"
       );
-      if (!data.ok) {
-        throw new Error(`HTTP error! Status: ${data.status}`);
-      }
+     
 
       const json = await data.json();
       // console.log(json);

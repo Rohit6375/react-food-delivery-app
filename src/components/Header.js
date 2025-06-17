@@ -9,7 +9,7 @@ import { FaShoppingCart } from "react-icons/fa";
 const Header = () => {
   //   let btnName = "Login";// can't update ui with normal js variable that's why we use state variables
   const [btnNameReact, setbtnNameReact] = useState("Login");
-  console.log("header render");
+  // console.log("header render");
   const data=useContext(UserContext);
   // if no dependency array use effect called on every render
   //  useEffect(()=>{
@@ -19,14 +19,14 @@ const Header = () => {
   // if dependency array is empty use effect is called  on only initial render
   // if dependency array is [btnnamereact] useeffect called everytime btnnamereact is updated
  useEffect(()=>{
-    console.log("useeffect called");
+    // console.log("useeffect called");
   },[btnNameReact]);
   const onlineStatus=useOnlineStatus();
   
-  console.log(data.loggedInUser);
+  // console.log(data.loggedInUser);
  // subscribing to store using selector
   const cartItems=useSelector((store)=>store.cart.items);
-  console.log(cartItems);
+  // console.log(cartItems);
   return (
    <div className="flex justify-between bg-pink-100 shadow-lg sm:bg-yellow-50 lg:bg-green-50">
   <div className="logo-container">

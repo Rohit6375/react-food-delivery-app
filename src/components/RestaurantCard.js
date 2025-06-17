@@ -4,12 +4,13 @@ import UserContext from "../utils/UserContext";
 
 const RestaurantCard = (props) => {
     const { resData } = props;
+    // console.log(resData);
     const{cloudinaryImageId,name,avgRating,cuisines,costForTwo,sla}=resData?.info;
     const data=useContext(UserContext);
     return (
-        <div className="m-4 p-4 w-[270px] bg-gray-200 hover:bg-gray-300" >
+        <div className="m-4 p-4 w-[300px] bg-gray-200 hover:bg-gray-300 rounded-lg hover:scale-105 transition-all duration-300" >
             <img 
-            className="rounded-lg hover:scale-105 transition-all duration-300 "
+            className="rounded-lg  "
                 alt="Restaurant logo" 
                 src={CDN_URL+resData.info.cloudinaryImageId} 
             />

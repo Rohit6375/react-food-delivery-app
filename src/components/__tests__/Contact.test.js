@@ -2,6 +2,7 @@ import { render, screen } from "@testing-library/react"
 import Contact from "../Contact"
 import "@testing-library/jest-dom";
 
+describe("Contact us Page test cases",()=>{
 test('should load contact us comp', () => { 
      render(<Contact/>)
      const heading=screen.getByRole("heading");
@@ -26,5 +27,16 @@ test('should find submit inside contact comp', () => {
      // assertion
      expect(inputName).toBeInTheDocument();
  });
+ test("should load 2 input boxes on the contact component",()=>{
+    render(<Contact/>)
+    const inputBoxes=screen.getAllByRole("textbox");
+//  console.log(inputBoxes[0]); 2
+    //asserstion
+
+     expect(inputBoxes.length)./*not*/toBe(2);
+ })
+})
+
+
 
  
